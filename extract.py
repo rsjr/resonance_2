@@ -17,7 +17,8 @@ from pandas.io.json import json_normalize
 def track_analysis(track_id):
 
     segments_normalized = pd.DataFrame()
-    timbre_array = []
+    timbre_split = pd.DataFrame(columns=['A','B','C','D','E','F','G','H','I','J','K','L'])
+    timbre_array = pd.DataFrame()
     start = time.time()
     delta = time.time() - start
     
@@ -33,9 +34,12 @@ def track_analysis(track_id):
     timbre_raw_df['MFCC'] = timbre_raw_df['MFCC'].str.replace("[","")
     timbre_raw_df['MFCC'] = timbre_raw_df['MFCC'].str.replace("]","")
 
-    timbre_array = timbre_raw_df.to_numpy()
+    timbre_split = timbre_raw_df['MFCC'].str.split(',',expand=True)
+
+    timbre_array = timbre_split.astype(float)
 
     return timbre_array;
+    #return timbre_split;
 
 def get_tracks_from_playlist(pl_ids):
     results = sp.user_playlist(username, pl_ids)
@@ -47,6 +51,8 @@ def get_tracks_from_playlist(pl_ids):
         tids.append(t['track']['id'])
     return tids;
 
+#def track_pre_processing(track_res):
+
 
 client_id = "ef3cb42f618f4fb0a2ddc9da661f26a3"
 client_secret= "ebca65d96fc34bc4b633d88e2a554a33"
@@ -54,7 +60,7 @@ redirect_uri= 'http://google.com/'
 username = 'rogeriosjr'
 
 pid = '37i9dQZF1DX49jUV2NfGku'
-tid = '3mRvIW6Dr9NrSH5DazOqix'
+tid = '3mRvIW6Dr9NrSH5DazOqix'  
 track_list = []
 
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
@@ -72,7 +78,7 @@ sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 track_list = get_tracks_from_playlist(pid)
 print(track_list)
 
-result = track_analysis(tid)
-print(result)
-print(result.shape)
+result_raw = track_analysis(tid)
+print(result_raw)
+print(result_raw.shape)
 
