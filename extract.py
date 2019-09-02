@@ -53,32 +53,34 @@ def get_tracks_from_playlist(pl_ids):
 
 #def track_pre_processing(track_res):
 
-
 client_id = "ef3cb42f618f4fb0a2ddc9da661f26a3"
 client_secret= "ebca65d96fc34bc4b633d88e2a554a33"
 redirect_uri= 'http://google.com/'
 username = 'rogeriosjr'
 
-pid = '37i9dQZF1DX49jUV2NfGku'
+#pid = '37i9dQZF1DX49jUV2NfGku'
+
+#test_extract 
+pid = '4RJt50gxyrztWYSE3qvsdy'
 tid = '3mRvIW6Dr9NrSH5DazOqix'  
 track_list = []
 
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
-
-
-#results = sp.search(q=artist_name, limit=50)
-
-#tids = []
-#for i, t in enumerate(results['tracks']['items']):
-#    print(' ', i, t['name'])
-#    tids.append(t['uri'])
-
 track_list = get_tracks_from_playlist(pid)
 print(track_list)
 
-result_raw = track_analysis(tid)
+#result_raw = []
+result_raw = pd.DataFrame()
+
+for i, val in enumerate(track_list):
+    res = track_analysis(track_list[i])
+    #print(res)
+    result_raw = result_raw.append(res)
+
+#result_raw = track_analysis(tid)
 print(result_raw)
 print(result_raw.shape)
 
+#export_csv = result_raw.to_csv(r'C:\Users\I840615\Documents\Dev\test.csv', index = None, header=True)
