@@ -53,10 +53,10 @@ def get_tracks_from_playlist(pl_ids):
 
 #def track_pre_processing(track_res):
 
-client_id = "ef3cb42f618f4fb0a2ddc9da661f26a3"
-client_secret= "ebca65d96fc34bc4b633d88e2a554a33"
+client_id = ""
+client_secret= ""
 redirect_uri= 'http://google.com/'
-username = 'rogeriosjr'
+username = ''
 
 #pid = '37i9dQZF1DX49jUV2NfGku'
 
